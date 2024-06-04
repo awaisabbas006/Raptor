@@ -200,8 +200,8 @@ add_subdirectory(IP_Catalog)
 
 # Raptor version
 set(VERSION_MAJOR 1)
-set(VERSION_MINOR 0)
-set(VERSION_PATCH 64)
+set(VERSION_MINOR 1)
+set(VERSION_PATCH 0)
 
 execute_process(COMMAND git config --global --add safe.directory ${CMAKE_CURRENT_SOURCE_DIR}
   COMMAND git rev-parse --short HEAD
@@ -697,7 +697,7 @@ if (NOT PRODUCTION_BUILD)
       FILES ${PROJECT_SOURCE_DIR}/yosys_verific_rs/yosys/share/simlib.v
       DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/raptor/sim_models/rapidsilicon/genesis/)
   install(
-      FILES ${PROJECT_SOURCE_DIR}/lib/pnr/primitives.v
+      FILES ${PROJECT_SOURCE_DIR}/lib/pnr/genesis/primitives.v
       DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/raptor/sim_models/rapidsilicon/genesis/)
   install(
       FILES ${PROJECT_SOURCE_DIR}/yosys_verific_rs/yosys-rs-plugin/genesis/cell_sim_blackbox.v
@@ -713,7 +713,7 @@ install(
       FILES ${PROJECT_SOURCE_DIR}/yosys_verific_rs/yosys/share/simlib.v
       DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/raptor/sim_models/rapidsilicon/genesis3/)
 install(
-      FILES ${PROJECT_SOURCE_DIR}/lib/pnr/primitives.v
+      FILES ${PROJECT_SOURCE_DIR}/lib/pnr/genesis3/primitives.v
       DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/raptor/sim_models/rapidsilicon/genesis3/)
 
 install(
@@ -834,7 +834,7 @@ add_custom_command(TARGET raptor-bin POST_BUILD
           ${PROJECT_SOURCE_DIR}/yosys_verific_rs/yosys/share/simlib.v
           ${CMAKE_CURRENT_BINARY_DIR}/share/raptor/sim_models/rapidsilicon/genesis/
       COMMAND ${CMAKE_COMMAND} -E copy
-          ${PROJECT_SOURCE_DIR}/lib/pnr/primitives.v
+          ${PROJECT_SOURCE_DIR}/lib/pnr/genesis/primitives.v
           ${CMAKE_CURRENT_BINARY_DIR}/share/raptor/sim_models/rapidsilicon/genesis/
       COMMAND ${CMAKE_COMMAND} -E copy
           ${PROJECT_SOURCE_DIR}/yosys_verific_rs/yosys-rs-plugin/genesis/cell_sim_blackbox.v
@@ -847,7 +847,7 @@ add_custom_command(TARGET raptor-bin POST_BUILD
           ${PROJECT_SOURCE_DIR}/yosys_verific_rs/yosys/share/simlib.v
           ${CMAKE_CURRENT_BINARY_DIR}/share/raptor/sim_models/rapidsilicon/genesis3/
       COMMAND ${CMAKE_COMMAND} -E copy
-          ${PROJECT_SOURCE_DIR}/lib/pnr/primitives.v
+          ${PROJECT_SOURCE_DIR}/lib/pnr/genesis3/primitives.v
           ${CMAKE_CURRENT_BINARY_DIR}/share/raptor/sim_models/rapidsilicon/genesis3/
 )
 
@@ -907,6 +907,9 @@ else ()
         COMMAND ${CMAKE_COMMAND} -E copy
           ${PROJECT_SOURCE_DIR}/src/to_be_raptor_linx
           ${CMAKE_CURRENT_BINARY_DIR}/bin/raptor
+        COMMAND ${CMAKE_COMMAND} -E copy
+          ${PROJECT_SOURCE_DIR}/src/to_be_raptor_checker
+          ${CMAKE_CURRENT_BINARY_DIR}/bin/checker  
         COMMAND ${CMAKE_COMMAND} -E copy
           ${PROJECT_SOURCE_DIR}/src/.raptorenv_lin64.sh
           ${CMAKE_CURRENT_BINARY_DIR})
